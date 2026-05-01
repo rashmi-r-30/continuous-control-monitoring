@@ -33,7 +33,8 @@ public class ControlItemService {
 
     @Transactional
     public ControlItemResponse create(ControlItemRequest req) {
-        ControlItem item = ControlItem.builder()
+        ControlItem item = ControlItem
+                .builder()
                 .title(req.getTitle())
                 .description(req.getDescription())
                 .category(req.getCategory())
