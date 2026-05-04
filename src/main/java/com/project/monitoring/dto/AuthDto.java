@@ -29,6 +29,7 @@ public class AuthDto {
     public static class AuthResponse {
         private String accessToken;
         private String refreshToken;
+        @Builder.Default
         private String tokenType = "Bearer";
         private String username;
         private String email;

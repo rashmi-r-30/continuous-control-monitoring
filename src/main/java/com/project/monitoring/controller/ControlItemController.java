@@ -23,7 +23,7 @@ public class ControlItemController {
     private final ControlItemService controlItemService;
 
     @GetMapping
-    @PreAuthorize("hasAnyRole('ADMIN','MANAGER','VIEWER')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_MANAGER','ROLE_VIEWER')")
     public ResponseEntity<Page<ControlItemResponse>> getAll(
             @RequestParam(defaultValue = "0")         int page,
             @RequestParam(defaultValue = "10")        int size,
@@ -37,19 +37,19 @@ public class ControlItemController {
     }
 
     @GetMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','MANAGER','VIEWER')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_MANAGER','ROLE_VIEWER')")
     public ResponseEntity<ControlItemResponse> getById(@PathVariable Long id) {
         return ResponseEntity.ok(controlItemService.getById(id));
     }
 
     @PostMapping
-    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_MANAGER')")
     public ResponseEntity<ControlItemResponse> create(@RequestBody ControlItemRequest request) {
         return ResponseEntity.status(201).body(controlItemService.create(request));
     }
 
     @PutMapping("/{id}")
-    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_MANAGER')")
     public ResponseEntity<ControlItemResponse> update(
             @PathVariable Long id,
             @RequestBody ControlItemRequest request) {
@@ -57,14 +57,14 @@ public class ControlItemController {
     }
 
     @DeleteMapping("/{id}")
-    @PreAuthorize("hasRole('ADMIN')")
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<Void> delete(@PathVariable Long id) {
         controlItemService.softDelete(id);
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping("/search")
-    @PreAuthorize("hasAnyRole('ADMIN','MANAGER','VIEWER')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_MANAGER','ROLE_VIEWER')")
     public ResponseEntity<Page<ControlItemResponse>> search(
             @RequestParam String q,
             @RequestParam(defaultValue = "0")  int page,
@@ -74,13 +74,13 @@ public class ControlItemController {
     }
 
     @GetMapping("/stats")
-    @PreAuthorize("hasAnyRole('ADMIN','MANAGER','VIEWER')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_MANAGER','ROLE_VIEWER')")
     public ResponseEntity<StatsResponse> getStats() {
         return ResponseEntity.ok(controlItemService.getStats());
     }
 
     @GetMapping("/export")
-    @PreAuthorize("hasAnyRole('ADMIN','MANAGER')")
+    @PreAuthorize("hasAnyAuthority('ROLE_ADMIN','ROLE_MANAGER')")
     public ResponseEntity<byte[]> exportCsv() {
         byte[] csv = controlItemService.exportCsv();
         return ResponseEntity.ok()
